@@ -1,0 +1,34 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.30114.105
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{1B7AC8E2-FCCE-44FF-84BB-E21EB1A2406D}"
+EndProject
+Project("{F2A71F9B-5D33-465A-A702-920D77279786}") = "Goban", "src\Goban\Goban.fsproj", "{51BF8441-1EA4-4EDC-A2E7-D01BD67C5D12}"
+EndProject
+Project("{F2A71F9B-5D33-465A-A702-920D77279786}") = "App", "src\App\App.fsproj", "{67EAEABA-C40A-4787-AABF-5058ACD0959F}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{51BF8441-1EA4-4EDC-A2E7-D01BD67C5D12}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{51BF8441-1EA4-4EDC-A2E7-D01BD67C5D12}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{51BF8441-1EA4-4EDC-A2E7-D01BD67C5D12}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{51BF8441-1EA4-4EDC-A2E7-D01BD67C5D12}.Release|Any CPU.Build.0 = Release|Any CPU
+		{67EAEABA-C40A-4787-AABF-5058ACD0959F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{67EAEABA-C40A-4787-AABF-5058ACD0959F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{67EAEABA-C40A-4787-AABF-5058ACD0959F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{67EAEABA-C40A-4787-AABF-5058ACD0959F}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{51BF8441-1EA4-4EDC-A2E7-D01BD67C5D12} = {1B7AC8E2-FCCE-44FF-84BB-E21EB1A2406D}
+		{67EAEABA-C40A-4787-AABF-5058ACD0959F} = {1B7AC8E2-FCCE-44FF-84BB-E21EB1A2406D}
+	EndGlobalSection
+EndGlobal
