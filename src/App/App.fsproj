@@ -5,10 +5,16 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="Types.fs" />
+    <Compile Include="Dataset.fs" />
     <Compile Include="Conv.fs" />
     <Compile Include="Main.fs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Goban\Goban.fsproj" />
+  </ItemGroup>
+  <ItemGroup>
+    <PackageReference Include="FSharp.Json" Version="0.4.1" />
+    <PackageReference Include="libtorch-cpu" Version="1.10.0.1" />
+    <PackageReference Include="TorchSharp" Version="0.96.6" />
   </ItemGroup>
 </Project>
