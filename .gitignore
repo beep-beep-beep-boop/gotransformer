@@ -39,3 +39,7 @@ msbuild.wrn
 
 
 .fake
+
+/games/
+val.json
+train.json
