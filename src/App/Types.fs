@@ -6,4 +6,4 @@ open Goban
 module Types =
     type Token = int
 
-    type Dataset = (Token list) list
+    type Dataset = (Token array) array

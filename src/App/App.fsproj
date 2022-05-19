@@ -7,6 +7,7 @@
     <Compile Include="Types.fs" />
     <Compile Include="Dataset.fs" />
     <Compile Include="Conv.fs" />
+    <Compile Include="Transformer.fs" />
     <Compile Include="Main.fs" />
   </ItemGroup>
   <ItemGroup>
