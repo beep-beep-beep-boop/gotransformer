@@ -246,7 +246,7 @@ let run train_raw val_raw test_raw epochs =
     let val_data = batchify val_raw batch_size device
     let test_data = batchify test_raw batch_size device
 
-    let ntokens = int64 Conv.vocab_size
+    let ntokens = int64 Token.vocab_size
 
     use model = new TransformerModel(ntokens, device)
     let lr = 2.50

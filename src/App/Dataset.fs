@@ -9,5 +9,4 @@ module Dataset =
         Json.deserialize<Dataset> text
 
     let as_tensor (dataset: Dataset) =
-        let toTensor (x: Token array) = torch.tensor (Array.map int64 x)
-        torch.cat ((Array.map toTensor dataset), 0)
+        torch.cat ((Array.map Token.array_to_tensor dataset), 0)

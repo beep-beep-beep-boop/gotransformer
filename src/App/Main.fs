@@ -17,12 +17,12 @@ type TrainArgs =
             | Test_data _ -> "path to the test data json file"
 
 and TestArgs =
-    | Test of test: string
+    | [<Hidden>] Hidden
 
     interface IArgParserTemplate with
         member this.Usage =
             match this with
-            | Test _ -> "hi"
+            | Hidden -> ""
 
 and GotransformerArgs =
     | [<CliPrefix(CliPrefix.None)>] Train of ParseResults<TrainArgs>
@@ -32,7 +32,7 @@ and GotransformerArgs =
         member this.Usage =
             match this with
             | Train _ -> "Train the model"
-            | Test _ -> "does nothing"
+            | Test _ -> "execute a special recipie"
 
 
 
@@ -45,6 +45,14 @@ module Main =
 
         Transformer.run d_train d_val d_test 1 |> ignore
 
+        0
+    
+    let cmd_test _ =
+        printfn "loading model..."
+        let model = new Transformer.TransformerModel(Token.vocab_size, torch.CPU)
+        model.load("model.dat") |> ignore
+
+        // now how do we make a prediction from this :\
         0
 
 
@@ -78,7 +86,7 @@ module Main =
                 else
                     train (targs.GetResult Train_data) (targs.GetResult Validation_data) (targs.GetResult Test_data)
             else if args.Contains Test then
-                0
+                cmd_test ()
             else
                 printfn "%s" (parser.PrintUsage())
                 -1

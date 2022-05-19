@@ -1,8 +1,9 @@
 namespace Gotransformer
 
 open Goban
+open TorchSharp
 
-module Conv =
+module Token =
     let special_tokens = 3
     let token_start: Token = 0
     let token_end: Token = 1
@@ -39,3 +40,5 @@ module Conv =
         { Row = r + 1
           Col = c + 1
           Color = color }
+    
+    let array_to_tensor (x: Token array) = torch.tensor (Array.map int64 x)
