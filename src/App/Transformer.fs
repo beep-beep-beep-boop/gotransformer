@@ -287,4 +287,4 @@ let run train_raw val_raw test_raw epochs =
     let lossStr = tst_loss.ToString("0.00")
     printfn $"\nEnd of training | time: {elapsed} s | loss: {lossStr}\n"
 
-    model
+    model.save("model.dat")
