@@ -4,10 +4,9 @@ open Goban
 open TorchSharp
 
 module Token =
-    let special_tokens = 3
+    let special_tokens = 2
     let token_start: Token = 0
     let token_end: Token = 1
-    let token_pad: Token = 2
 
     let board_size = 19
     let total_intersections = board_size * board_size
