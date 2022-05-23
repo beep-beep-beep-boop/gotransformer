@@ -48,22 +48,6 @@ module Main =
 
         0
     
-    let predict (model:Transformer.TransformerModel) (input:Token array) =
-        model.eval ()
-
-        let mutable input_tensor = Token.array_to_tensor input
-
-        let mask = model.GenerateSquareSubsequentMask (input_tensor.shape.[0])
-        use output = model.forward (input_tensor, mask)
-
-        let struct (a, b) = (output.topk 1)
-        let next_item:int64= b.view(-1).[-1].item()
-
-        let next_item_32 = int32 next_item
-        if (int64 next_item_32) <> next_item then
-            raise (System.Exception("the int64 was too big ???"))
-
-        Token.token_to_move next_item_32
 
     let cmd_test _ =
         printfn "loading model..."
@@ -74,7 +58,7 @@ module Main =
         printfn "predicting..."
         let move1 = {Col=3; Row=6; Color=Black}
         let input = [| Token.token_start ; Token.move_to_token move1; |]
-        predict model input |> printfn "%A"
+        Transformer.predict model input |> Token.token_to_move |> printfn "%A"
 
         // now how do we make a prediction from this :\
         0

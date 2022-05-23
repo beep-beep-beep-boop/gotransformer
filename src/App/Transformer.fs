@@ -288,3 +288,20 @@ let run train_raw val_raw test_raw epochs =
     printfn $"\nEnd of training | time: {elapsed} s | loss: {lossStr}\n"
 
     model.save("model.dat")
+
+let predict (model:TransformerModel) (input:Token array) : Token =
+    model.eval ()
+
+    let mutable input_tensor = Token.array_to_tensor input
+
+    let mask = model.GenerateSquareSubsequentMask (input_tensor.shape.[0])
+    use output = model.forward (input_tensor, mask)
+
+    let struct (a, b) = (output.topk 1)
+    let next_item:int64= b.view(-1).[-1].item()
+
+    let next_item_32 = int32 next_item
+    if (int64 next_item_32) <> next_item then
+        raise (System.Exception("the int64 was too big ???"))
+
+    next_item_32
