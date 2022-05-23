@@ -6,10 +6,9 @@ from collections import namedtuple
 import random
 import json
 
-special_tokens = 3
+special_tokens = 2
 token_start = 0
 token_end = 1
-token_pad = 2
 
 board_size = 19
 
@@ -131,27 +130,25 @@ def process_game(input_path):
     return b_size, handicap, white_rank, black_rank, game_data
 
 if __name__ == "__main__":
-    print("Warning - make sure the constants in this script are set to what you're using in the other code (ie, board size, pad token, etc)")
+    print("Warning - make sure the constants in this script are set to what you're using in the other code (board size, token settings)")
 
     paths = glob.glob('./games/**/*.sgf', recursive=True)
     random.shuffle(paths)
     max_game_amount = len(paths)
     max_game_length = 512
 
-    # amount of data to put in the test dataset
+    # amount of data to put in the test and val dataset
     # should be between 0 and 1
     split_test_percent = 0.15
 
     # note - these might not be all filled up, these are just the max amounts
     # (at least the train one)
-    test_amount = int(max_game_amount * split_test_percent)
-    train_max_amount = max_game_amount - test_amount
+    test_val_amount = int((max_game_amount * split_test_percent) * 0.5)
+    train_max_amount = max_game_amount - (test_val_amount * 2)
 
     d_train = []
     d_val = []
-
-    # TODO: we might just want to throw everything into the same file first and then split it after,
-    #   once we know how much valid data there is
+    d_test = []
 
     num = 0
     for path in paths:
@@ -167,8 +164,13 @@ if __name__ == "__main__":
         if b_size != board_size:
             continue
 
-        if num < test_amount:
-            d_val.append(game)
+        if num < (test_val_amount * 2):
+            # figure out if we're in the test or val split
+            if num > test_val_amount:
+                d_val.append(game)
+            else:
+                d_test.append(game)
+
         else:
             d_train.append(game)
 
@@ -186,3 +188,6 @@ if __name__ == "__main__":
     
     with open('val.json', 'w') as f:
         json.dump(d_val, f)
+    
+    with open('test.json', 'w') as f:
+        json.dump(d_test, f)

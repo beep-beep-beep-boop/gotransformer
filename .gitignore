@@ -42,5 +42,6 @@ msbuild.wrn
 
 /games/
 val.json
+test.json
 train.json
 *.dat
