@@ -10,11 +10,12 @@ open TorchSharp
 open type TorchSharp.torch.nn
 open type TorchSharp.torch.optim
 
-let emsize = 200L
-let nhidden = 200L
-let nlayers = 2L
-let nheads = 2L
-let dropout = 0.2
+// hyperparameters
+let emsize = 200L // embedding dimension
+let nhidden = 200L // dimension of the feedforward network model in nn.TransformerEncoder
+let nlayers = 2L // number of nn.TransformerEncoderLayer in nn.TransformerEncoder
+let nheads = 2L // number of heads in nn.MultiheadAttention
+let dropout = 0.2 // dropout probability
 let bptt = 32L
 
 let batch_size = 64L
@@ -292,12 +293,12 @@ let run train_raw val_raw test_raw epochs =
 let predict (model:TransformerModel) (input:Token array) : Token =
     model.eval ()
 
-    let mutable input_tensor = Token.array_to_tensor input
+    let input_tensor = Token.array_to_tensor input
 
     let mask = model.GenerateSquareSubsequentMask (input_tensor.shape.[0])
     use output = model.forward (input_tensor, mask)
 
-    let struct (a, b) = (output.topk 1)
+    let struct (_, b) = (output.topk 1)
     let next_item:int64= b.view(-1).[-1].item()
 
     let next_item_32 = int32 next_item
