@@ -137,13 +137,12 @@ if __name__ == "__main__":
     max_game_amount = len(paths)
     max_game_length = 512
 
-    # amount of data to put in the test and val dataset
-    # should be between 0 and 1
-    split_test_percent = 0.15
+    # amount of data to split between the test and val dataset
+    split_test_amount = 20000
 
     # note - these might not be all filled up, these are just the max amounts
     # (at least the train one)
-    test_val_amount = int((max_game_amount * split_test_percent) * 0.5)
+    test_val_amount = int(split_test_amount * 0.5)
     train_max_amount = max_game_amount - (test_val_amount * 2)
 
     d_train = []
