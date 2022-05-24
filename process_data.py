@@ -105,7 +105,8 @@ def process_game(input_path):
     try:
         handicap = sgf_game.get_handicap()
     except ValueError:
-        raise Exception('handicap information malformed')
+        handicap = None
+        #raise Exception('handicap information malformed')
 
     if handicap == None:
         handicap = 0
@@ -154,7 +155,7 @@ if __name__ == "__main__":
         try:
             b_size, handicap, wr, br, game = process_game(path)
         except:
-            print('err')
+            #print('err')
             continue
 
         if handicap != 0:
