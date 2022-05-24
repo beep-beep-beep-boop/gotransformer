@@ -11,10 +11,10 @@ open type TorchSharp.torch.nn
 open type TorchSharp.torch.optim
 
 // hyperparameters
-let emsize = 728L // embedding dimension
-let nhidden = 728L // dimension of the feedforward network model in nn.TransformerEncoder
+let emsize = 768L // embedding dimension
+let nhidden = 768L // dimension of the feedforward network model in nn.TransformerEncoder
 let nlayers = 12L // number of nn.TransformerEncoderLayer in nn.TransformerEncoder
-let nheads = 8L // number of heads in nn.MultiheadAttention
+let nheads = 12L // number of heads in nn.MultiheadAttention
 let dropout = 0.1 // dropout probability
 let bptt = 32L
 
