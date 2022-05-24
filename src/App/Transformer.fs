@@ -296,7 +296,9 @@ let run train_raw val_raw test_raw epochs (model_restore:TransformerModel option
     let lossStr = tst_loss.ToString("0.00")
     printfn $"\nEnd of training | time: {elapsed} s | loss: {lossStr}\n"
 
-    model.save("model.dat")
+    model.save("model.dat") |> ignore
+
+    ()
 
 let predict (model:TransformerModel) (input:Token array) : Token =
     model.eval ()

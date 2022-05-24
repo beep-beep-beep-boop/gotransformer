@@ -49,13 +49,7 @@ module Main =
         let model = match model_path with
                     | Some path ->
                         printfn "restoring model..."
-                        let hasCUDA = torch.cuda.is_available ()
-                        let device =
-                            if hasCUDA then
-                                torch.CUDA
-                            else
-                                torch.CPU
-                        let m = new Transformer.TransformerModel(Token.vocab_size, device)
+                        let m = new Transformer.TransformerModel(Token.vocab_size, Transformer.device)
                         m.load(path) |> ignore
                         Some m
                     | None -> None
