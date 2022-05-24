@@ -279,7 +279,7 @@ let run train_raw val_raw test_raw epochs =
         printfn $"\nEnd of epoch: {epoch} | lr: {lrStr} | time: {elapsed}s | loss: {lossStr}\n"
 
         // save the model just in case
-        let filename = $"model-e{epoch}-{System.Guid.NewGuid.ToString()}.dat"
+        let filename = $"model-e{epoch}-{System.Guid.NewGuid().ToString()[0..7]}.dat"
         model.save(filename) |> ignore
 
         scheduler.step () |> ignore
