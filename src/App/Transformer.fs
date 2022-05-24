@@ -239,7 +239,7 @@ let evaluate (model: TransformerModel) (evalData: torch.Tensor) ntokens =
 
     total_loss / (float32 evalData.shape.[0])
 
-let run train_raw val_raw test_raw epochs =
+let run train_raw val_raw test_raw epochs (model_restore:TransformerModel option)=
 
     printfn $"Running SequenceToSequence on {device.``type``.ToString()} for {epochs} epochs."
 
@@ -249,7 +249,11 @@ let run train_raw val_raw test_raw epochs =
 
     let ntokens = int64 Token.vocab_size
 
-    use model = new TransformerModel(ntokens, device)
+    // are we restoring from a model that has already been trained some or training a fresh model
+    use model = match model_restore with
+                    | Some m -> m
+                    | None -> new TransformerModel(ntokens, device)
+
     let lr = 2.50
     let optimizer = SGD(model.parameters (), lr)
     let scheduler = lr_scheduler.StepLR(optimizer, 1, 0.95, last_epoch = 15)

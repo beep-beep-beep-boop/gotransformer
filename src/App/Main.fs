@@ -9,6 +9,7 @@ type TrainArgs =
     | [<Mandatory>] Train_data of path: string
     | [<Mandatory>] Validation_data of path: string
     | [<Mandatory>] Test_data of path: string
+    | Model of path: string
 
     interface IArgParserTemplate with
         member this.Usage =
@@ -16,6 +17,7 @@ type TrainArgs =
             | Train_data _ -> "path to the train data json file"
             | Validation_data _ -> "path to the validation data file"
             | Test_data _ -> "path to the test data json file"
+            | Model _ -> "path to the model to restore and continue training from (optional)"
 
 and TestArgs =
     | [<Hidden>] Hidden
@@ -38,13 +40,27 @@ and GotransformerArgs =
 
 
 module Main =
-    let train train_path val_path test_path =
+    let train train_path val_path test_path (model_path:Option<string>)=
         printfn "loading data..."
         let d_train = Dataset.as_tensor (Dataset.load train_path)
         let d_val = Dataset.as_tensor (Dataset.load val_path)
         let d_test = Dataset.as_tensor (Dataset.load test_path)
 
-        Transformer.run d_train d_val d_test 1 |> ignore
+        let model = match model_path with
+                    | Some path ->
+                        printfn "restoring model..."
+                        let hasCUDA = torch.cuda.is_available ()
+                        let device =
+                            if hasCUDA then
+                                torch.CUDA
+                            else
+                                torch.CPU
+                        let m = new Transformer.TransformerModel(Token.vocab_size, device)
+                        m.load(path) |> ignore
+                        Some m
+                    | None -> None
+
+        Transformer.run d_train d_val d_test 1 model |> ignore
 
         0
     
@@ -92,7 +108,8 @@ module Main =
                     printfn "run with --help to know what u need"
                     -1
                 else
-                    train (targs.GetResult Train_data) (targs.GetResult Validation_data) (targs.GetResult Test_data)
+                    let model = if targs.Contains Model then Some (targs.GetResult Model) else None
+                    train (targs.GetResult Train_data) (targs.GetResult Validation_data) (targs.GetResult Test_data) model
             else if args.Contains Test then
                 cmd_test ()
             else
